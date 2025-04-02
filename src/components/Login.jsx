@@ -1,10 +1,19 @@
 import { useState } from "react";
+import axios from "axios";
 const Login = () => {
     const [emailId,setEmailId] = useState("");
     const [password,setPassword] = useState("");
-    const handleOnClick = () =>{
-        console.log(emailId);
-        console.log(password);
+    const handleOnClick = async () =>{
+        try {
+            const response =await axios.post("http://localhost:7777/login",{
+                emailId : emailId,
+                password : password
+            },{withCredentials : true})
+            console.log(response);
+        } catch (error) {
+            console.log(error.message);
+        }
+        
     }
     return (
         <div className="card bg-base-300 w-96 shadow-sm mx-auto my-32">

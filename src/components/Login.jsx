@@ -1,27 +1,34 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addUser } from "../utils/userSlice";
 import { useNavigate } from "react-router-dom";
 const Login = () => {
-    const [emailId,setEmailId] = useState("");
-    const [password,setPassword] = useState("");
+    const [emailId, setEmailId] = useState("");
+    const [password, setPassword] = useState("");
+    const user = useSelector((store) => store.user);
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const handleOnClick = async () =>{
+    const handleOnClick = async () => {
         try {
-            const response =await axios.post("http://localhost:7777/login",{
-                emailId : emailId,
-                password : password
-            },{withCredentials : true})
+            const response = await axios.post("http://localhost:7777/login", {
+                emailId: emailId,
+                password: password
+            }, { withCredentials: true })
             dispatch(addUser(response.data));
             navigate("/");
             console.log(response);
         } catch (error) {
             console.log(error.message);
         }
-        
+
     }
+
+    useEffect(() => {
+        if(user){
+            navigate("/");
+        }
+    },[user])
     return (
         <div className="card bg-base-300 w-96 shadow-sm mx-auto my-32">
             <div className="card-body">
@@ -33,7 +40,7 @@ const Login = () => {
                             <circle cx="12" cy="7" r="4"></circle>
                         </g>
                     </svg>
-                    <input type="text" placeholder="Username" value={emailId} onChange={(e)=> setEmailId(e.target.value)}/>
+                    <input type="text" placeholder="Username" value={emailId} onChange={(e) => setEmailId(e.target.value)} />
                 </label>
 
                 <label className="input validator my-4">
@@ -43,7 +50,7 @@ const Login = () => {
                             <circle cx="16.5" cy="7.5" r=".5" fill="currentColor"></circle>
                         </g>
                     </svg>
-                    <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)}/>
+                    <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
                 </label>
 
                 <div className="card-actions justify-center">

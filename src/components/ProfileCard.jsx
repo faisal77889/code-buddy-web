@@ -5,7 +5,7 @@ const ProfileCard = ({user}) => {
             <div className="card bg-base-300 w-96 h-[60vh] shadow-sm flex flex-col justify-between self-start">
                 <figure className="px-10 pt-10">
                     <img
-                        src={PhotoUrl}
+                        src={PhotoUrl ? PhotoUrl : "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"}
                         alt="Shoes"
                         className="rounded-xl" />
                 </figure>

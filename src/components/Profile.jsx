@@ -1,4 +1,6 @@
 import { useSelector } from "react-redux";
+import EditProfile from "./EditProfile";
+import ProfileCard from "./ProfileCard";
 
 const Profile = () => {
     const user = useSelector((store) => store.user);
@@ -6,8 +8,14 @@ const Profile = () => {
     return (
         <div>
             {user &&
-                <div>{user.firstName + " " + user.lastName} is the current user </div>
+
+                <div className="flex items-center justify-center gap-4">
+                <EditProfile user = {user} />
+                
+            </div>
             }
+            
+
         </div>
     )
 }

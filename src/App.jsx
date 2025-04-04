@@ -5,6 +5,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import appStore from "./utils/appStore";
 import Profile from "./components/Profile";
 import Connections from "./components/Connection";
+import Request from "./components/Request";
 
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
               <Route path="/login" element={<Login />}></Route>
               <Route path="/profile/view" element = {<Profile />}></Route>
               <Route path="/connections" element = {<Connections />}></Route>
+              <Route path="/requests" element = {<Request />}></Route>
             </Route>
           </Routes>
         </BrowserRouter>

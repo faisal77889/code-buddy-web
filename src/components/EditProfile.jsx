@@ -9,10 +9,10 @@ const EditProfile = (props) => {
     const {firstName,lastName,age,gender,photoUrl,about} = user;
     const [FirstName,setFirstName] = useState(firstName);
     const [LastName,setLastName] = useState(lastName);
-    const [Age,setAge] = useState(age);
-    const [Gender,setGender] = useState(gender);
-    const [PhotoUrl,setPhotoUrl] = useState(photoUrl);
-    const [About,setAbout] = useState(about);
+    const [Age,setAge] = useState(age || "");
+    const [Gender,setGender] = useState(gender || "");
+    const [PhotoUrl,setPhotoUrl] = useState(photoUrl || "");
+    const [About,setAbout] = useState(about || "");
     const dispatch = useDispatch();
     const handleButtonClick = async () =>{
         try {

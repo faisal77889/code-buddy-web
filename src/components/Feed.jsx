@@ -27,7 +27,7 @@ const Feed = () => {
                 { withCredentials: true }
             );
             dispatch(removeUserFromFeed(userId));
-            console.log(response);
+            // console.log(response);
         } catch (error) {
             console.log(error);
         }

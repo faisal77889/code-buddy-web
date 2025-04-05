@@ -6,11 +6,17 @@ import { useNavigate } from "react-router-dom";
 const Login = () => {
     const [emailId, setEmailId] = useState("");
     const [password, setPassword] = useState("");
-    const [errorMessage,setErrorMessage] = useState("");
+    const [firstName,setFirstName] = useState("");
+    const [lastName,setLastName] = useState("");
+    const [errorMessage, setErrorMessage] = useState("");
+    const [isSignUp, setIsSignUp] = useState(false);
     const user = useSelector((store) => store.user);
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const handleOnClick = async () => {
+        if(isSignUp){
+            return;
+        }
         try {
             const response = await axios.post("http://localhost:7777/login", {
                 emailId: emailId,
@@ -24,16 +30,48 @@ const Login = () => {
         }
 
     }
+    const handleSignUp = async () =>{
+        if(!isSignUp){
+            return;
+        }
+        try {
+            const response = await axios.post("http://localhost:7777/signup",{
+                firstName,
+                lastName,
+                emailId,
+                password
+            },{withCredentials : true});
+            dispatch(addUser(response?.data));
+            navigate("/profile/view");
+            // console.log(response);
+        } catch (error) {
+            setErrorMessage(error?.response?.data);
+        }
+    }
 
     useEffect(() => {
-        if(user){
-            navigate("/");
+        if (user) {
+            if(isSignUp){
+                navigate("/profile/view");
+            }
+            if(!isSignUp){
+
+                navigate("/");
+            }
         }
-    },[user])
+    }, [user])
     return (
         <div className="card bg-base-300 w-96 shadow-sm mx-auto my-32">
             <div className="card-body">
-                <h2 className="card-title justify-center">Login</h2>
+                    <h2 className="card-title justify-center">{isSignUp ? "Sign Up Now" : "Login"}</h2>
+                {isSignUp && <>
+                    <fieldset className="fieldset">
+                        <input type="text" className="input" placeholder="Enter your first name" value={firstName} onChange={(e)=>setFirstName(e.target.value)} />
+                    </fieldset>
+                    <fieldset className="fieldset">
+                        <input type="text" className="input" placeholder="Enter your last name" value={lastName} onChange={(e)=> setLastName(e.target.value)} />
+                    </fieldset>
+                </>}
                 <label className="input validator my-4">
                     <svg className="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                         <g strokeLinejoin="round" strokeLinecap="round" strokeWidth="2.5" fill="none" stroke="currentColor">
@@ -53,11 +91,15 @@ const Login = () => {
                     </svg>
                     <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
                 </label>
-                <p className="">{errorMessage}</p>
+                <p className="text-center">{errorMessage}</p>
 
                 <div className="card-actions justify-center">
-                    <button className="btn btn-primary" onClick={handleOnClick}>Sign In</button>
+                    <button className="btn btn-primary" onClick={() => isSignUp ? handleSignUp() : handleOnClick()}>{isSignUp ? "Register Now " : "Login"}</button>
                 </div>
+                <p className="text-center cursor-pointer my-1" onClick={()=> {setIsSignUp(!isSignUp)
+                    setEmailId("");
+                    setPassword("");
+                }}>{isSignUp ? "Already a User? Login Now" : "New to CodeBuddy? Sign Up Now"}</p>
             </div>
         </div>
     )

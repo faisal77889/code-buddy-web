@@ -23,8 +23,8 @@ const Login = () => {
                 password: password
             }, { withCredentials: true })
             dispatch(addUser(response.data));
-            navigate("/");
-            console.log(response);
+            return navigate("/");
+            // console.log(response);
         } catch (error) {
             setErrorMessage(error?.response?.data);
         }
@@ -42,7 +42,7 @@ const Login = () => {
                 password
             },{withCredentials : true});
             dispatch(addUser(response?.data));
-            navigate("/profile/view");
+            return navigate("/profile/view");
             // console.log(response);
         } catch (error) {
             setErrorMessage(error?.response?.data);
@@ -94,7 +94,7 @@ const Login = () => {
                 <p className="text-center">{errorMessage}</p>
 
                 <div className="card-actions justify-center">
-                    <button className="btn btn-primary" onClick={() => isSignUp ? handleSignUp() : handleOnClick()}>{isSignUp ? "Register Now " : "Login"}</button>
+                    <button className="btn btn-primary" onClick={ isSignUp ? handleSignUp : handleOnClick}>{isSignUp ? "Register Now " : "Login"}</button>
                 </div>
                 <p className="text-center cursor-pointer my-1" onClick={()=> {setIsSignUp(!isSignUp)
                     setEmailId("");

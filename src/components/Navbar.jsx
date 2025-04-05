@@ -9,37 +9,21 @@ const Navbar = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const location = useLocation(); 
+    // console.log(location.pathname);
 
-    const fetchData = async () => {
-        try {
-            const response = await axios.get("http://localhost:7777/profile/view", {
-                withCredentials: true,
-            });
-            dispatch(addUser(response.data));
-        } catch (error) {
-            if (error?.response?.status === 401) {
-                navigate("/login");
-            }
-            console.error(error);
-        }
-    };
+    
 
     const handleButtonClick = async () => {
         try {
             await axios.post("http://localhost:7777/logout", {}, { withCredentials: true });
             dispatch(removeUser());
-            navigate("/login");
+            return navigate("/login");
         } catch (error) {
             console.log(error);
         }
     };
 
-    useEffect(() => {
-        const excludedPaths = ["/login", "/signup"];
-        if (!user && !excludedPaths.includes(location.pathname)) {
-            fetchData();
-        }
-    }, [location.pathname]);
+    
 
     return (
         <>

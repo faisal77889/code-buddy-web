@@ -1,7 +1,35 @@
+import { useEffect } from "react";
 import Navbar from "./Navbar"
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { addUser } from "../utils/userSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 const Body = () =>{
+    const user = useSelector((store) => store.user);
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const fetchData = async () => {
+        
+        try {
+            const response = await axios.get("http://localhost:7777/profile/view", {
+                withCredentials: true,
+            });
+            dispatch(addUser(response.data));
+        } catch (error) {
+            if (error?.response?.status === 401) {
+                navigate("/login");
+            }
+            console.error(error);
+        }
+    };
+    useEffect(() => {
+            
+            if (!user) {
+                fetchData();
+            }
+        }, []);
+
 
     return (
         <div>

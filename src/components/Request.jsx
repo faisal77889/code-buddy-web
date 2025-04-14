@@ -1,13 +1,14 @@
 import ConnectionCard from "./ConnectionCard";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { BASE_URL } from "../utils/constants";
 
 const Request = () => {
     const [profileInfo, setProfileInfo] = useState([]);
     const [removedId,setRemovedId] = useState([]);
     const fetchData = async () => {
         try {
-            const response = await axios.get("http://localhost:7777/user/pending-request",
+            const response = await axios.get(BASE_URL + "/user/pending-request",
                 { withCredentials: true }
             );
             setProfileInfo(response?.data);
@@ -17,7 +18,7 @@ const Request = () => {
     }
     const handleButtonClick = async (status,requestId) =>{
         try {
-            const response = await axios.post("http://localhost:7777/request/review/" + status + "/" + requestId,{},{withCredentials: true});
+            const response = await axios.post(BASE_URL + "/request/review/" + status + "/" + requestId,{},{withCredentials: true});
             setRemovedId(prev => [...prev, response.data._id]);
 
         } catch (error) {

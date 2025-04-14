@@ -1,13 +1,14 @@
 import ConnectionCard from "./ConnectionCard";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { BASE_URL } from "../utils/constants";
 
 
 const Connections = () => {
     const [connectionInfo,setConnectionInfo] = useState("");
     const fetchData = async () =>{
         try {
-            const response = await axios.get("http://localhost:7777/user/connections",
+            const response = await axios.get(BASE_URL + "/user/connections",
             {withCredentials : true});
             setConnectionInfo(response.data);
         } catch (error) {

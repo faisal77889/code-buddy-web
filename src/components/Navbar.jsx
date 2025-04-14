@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import axios from "axios";
 import { addUser, removeUser } from "../utils/userSlice";
 import { Link, useNavigate, useLocation } from "react-router-dom";
+import { BASE_URL } from "../utils/constants";
 
 const Navbar = () => {
     const user = useSelector((store) => store.user);
@@ -15,7 +16,7 @@ const Navbar = () => {
 
     const handleButtonClick = async () => {
         try {
-            await axios.post("http://localhost:7777/logout", {}, { withCredentials: true });
+            await axios.post(BASE_URL + "/logout", {}, { withCredentials: true });
             dispatch(removeUser());
             return navigate("/login");
         } catch (error) {

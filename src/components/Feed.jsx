@@ -3,6 +3,7 @@ import ProfileCard from "./ProfileCard";
 import { useEffect } from "react";
 import axios from "axios";
 import { addFeed, removeUserFromFeed } from "../utils/feedSlice";
+import { BASE_URL } from "../utils/constants";
 
 const Feed = () => {
     const feedUser = useSelector((store) => store.feed);
@@ -10,7 +11,7 @@ const Feed = () => {
 
     const fetchData = async () => {
         try {
-            const response = await axios.get("http://localhost:7777/user/feed", {
+            const response = await axios.get(BASE_URL + "/user/feed", {
                 withCredentials: true,
             });
             dispatch(addFeed(response.data));
@@ -22,7 +23,7 @@ const Feed = () => {
     const handleButtonClick = async (status, userId) => {
         try {
             const response = await axios.post(
-                `http://localhost:7777/request/${status}/${userId}`,
+                BASE_URL + `/request/${status}/${userId}`,
                 {},
                 { withCredentials: true }
             );

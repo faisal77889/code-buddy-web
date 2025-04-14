@@ -3,6 +3,7 @@ import ProfileCard from "./ProfileCard";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
+import { BASE_URL } from "../utils/constants";
 const EditProfile = (props) => {
     // console.log(firstName);
     const user = props.user;
@@ -16,7 +17,7 @@ const EditProfile = (props) => {
     const dispatch = useDispatch();
     const handleButtonClick = async () =>{
         try {
-            const response = await axios.patch("http://localhost:7777/profile/edit",
+            const response = await axios.patch(BASE_URL + "/profile/edit",
             {firstName : FirstName, lastName: LastName, age : Age , gender : Gender, photoUrl : PhotoUrl,about : About},
             {withCredentials : true});
             dispatch(addUser(response.data));

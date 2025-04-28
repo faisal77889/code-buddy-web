@@ -50,7 +50,7 @@ const Request = () => {
                                 className="w-1/2 mx-auto my-[1rem] flex bg-base-300 rounded-xl"
                             >
                                 <div className="w-[85%]">
-                                    <ConnectionCard connectionInfo={connectionInfo.fromUserId} />
+                                    <ConnectionCard connectionInfo={connectionInfo.fromUserId} request ={true} />
                                 </div>
                                 <div className="my-auto">
                                     <div>

@@ -36,7 +36,7 @@ const Login = () => {
             return;
         }
         try {
-            const response = await axios.post(BASE_URL + "/signup",{
+            const response = await axios.post(BASE_URL +"/signup",{
                 firstName,
                 lastName,
                 emailId,
